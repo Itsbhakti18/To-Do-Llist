@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌸 Level Up Journal — Login</title>
+  <style>
+    :root {
+      --bg: #f8f5ff; --surface: #ffffff; --surface2: #f1eaff;
+      --border: #ddd0f5; --accent: #7c3aed; --accent2: #a855f7; --accent3: #c084fc;
+      --text: #1e1030; --sub: #6b5c8a;
+      --shadow: 0 4px 24px rgba(124,58,237,.12);
+      --radius: 14px;
+    }
+    [data-theme="dark"] {
+      --bg: #100c1e; --surface: #1a1330; --surface2: #231a3a;
+      --border: #3d2f60; --accent: #a855f7; --accent2: #c084fc; --accent3: #7c3aed;
+      --text: #f0e8ff; --sub: #9e8cc0;
+      --shadow: 0 4px 24px rgba(0,0,0,.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: background .25s, color .25s;
+      padding: 20px;
+    }
+    .theme-toggle {
+      position: fixed; top: 16px; right: 16px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 7px 13px;
+      cursor: pointer; font-size: .82rem; font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+    .brand {
+      text-align: center; margin-bottom: 32px;
+    }
+    .brand .logo { font-size: 2.8rem; line-height: 1; }
+    .brand h1 { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-top: 8px; }
+    .brand p { font-size: .85rem; color: var(--sub); margin-top: 4px; }
+
+    .card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      width: 100%; max-width: 400px; overflow: hidden;
+    }
+    .tabs {
+      display: flex; border-bottom: 1.5px solid var(--border);
+    }
+    .tab {
+      flex: 1; padding: 14px; text-align: center;
+      font-size: .88rem; font-weight: 700; cursor: pointer;
+      color: var(--sub); background: var(--surface2);
+      transition: all .2s; letter-spacing: .3px;
+      border: none; outline: none;
+    }
+    .tab.active {
+      background: var(--surface); color: var(--accent);
+      border-bottom: 2.5px solid var(--accent);
+    }
+    .tab-panel { display: none; padding: 28px 24px; }
+    .tab-panel.active { display: block; }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: .75rem; font-weight: 700;
+      color: var(--sub); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px;
+    }
+    .field input {
+      width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
+      border-radius: 9px; padding: 11px 14px; color: var(--text);
+      font-size: .92rem; outline: none; font-family: inherit;
+      transition: border .15s, box-shadow .15s;
+    }
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.13);
+    }
+    .field .hint { font-size: .72rem; color: var(--sub); margin-top: 4px; }
+    .err {
+      background: #fef2f2; border: 1px solid #fca5a5;
+      color: #dc2626; border-radius: 8px;
+      padding: 9px 12px; font-size: .82rem;
+      margin-bottom: 14px; display: none;
+    }
+    [data-theme="dark"] .err { background: #2d0a0a; border-color: #7f1d1d; color: #f87171; }
+    .btn-primary {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none; border-radius: 10px;
+      font-size: .95rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(124,58,237,.3);
+      transition: opacity .15s, transform .1s;
+      letter-spacing: .3px;
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-primary:active { transform: scale(.98); }
+    .divider {
+      display: flex; align-items: center; gap: 10px;
+      margin: 16px 0; color: var(--sub); font-size: .78rem;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .demo-btn {
+      width: 100%; padding: 11px;
+      background: var(--surface2); color: var(--sub);
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: .88rem; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    .demo-btn:hover { background: var(--surface); color: var(--accent); border-color: var(--accent); }
+    .footer-note { text-align: center; font-size: .75rem; color: var(--sub); margin-top: 20px; }
+  </style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+
+<div class="brand">
+  <div class="logo">🌸</div>
+  <h1>Level Up Journal</h1>
+  <p>Track habits, missions & growth — every single day.</p>
+</div>
+
+<div class="card">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('login')">Sign In</button>
+    <button class="tab" onclick="switchTab('signup')">Create Account</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="tab-panel active" id="panel-login">
+    <div class="err" id="login-err"></div>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="login-user" placeholder="your username" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <button class="btn-primary" onclick="login()">Sign In →</button>
+    <div class="divider">or</div>
+    <button class="demo-btn" onclick="demoLogin()">👀 Try Demo Account</button>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="tab-panel" id="panel-signup">
+    <div class="err" id="signup-err"></div>
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" id="signup-name" placeholder="Your name" />
+    </div>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="signup-user" placeholder="choose a username" autocomplete="username" />
+      <div class="hint">Letters, numbers and underscores only.</div>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="signup-pass" placeholder="min 6 characters" autocomplete="new-password" />
+    </div>
+    <div class="field">
+      <label>Confirm Password</label>
+      <input type="password" id="signup-pass2" placeholder="repeat password" autocomplete="new-password" />
+    </div>
+    <button class="btn-primary" onclick="signup()">Create Account →</button>
+  </div>
+</div>
+
+<div class="footer-note">All data is stored locally in your browser.</div>
+
+<script>
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    document.getElementById('themeBtn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
+    localStorage.setItem('luj_theme', next);
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'login')));
+    document.getElementById('panel-login').classList.toggle('active', tab === 'login');
+    document.getElementById('panel-signup').classList.toggle('active', tab === 'signup');
+  }
+
+  function showErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg; el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3500);
+  }
+
+  function getUsers() { return JSON.parse(localStorage.getItem('luj_users') || '{}'); }
+  function saveUsers(u) { localStorage.setItem('luj_users', JSON.stringify(u)); }
+
+  function login() {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    if (!user || !pass) return showErr('login-err', 'Please fill in all fields.');
+    const users = getUsers();
+    if (!users[user] || users[user].password !== btoa(pass))
+      return showErr('login-err', 'Invalid username or password.');
+    localStorage.setItem('luj_session', user);
+    window.location.href = 'journal.html';
+  }
+
+  function signup() {
+    const name = document.getElementById('signup-name').value.trim();
+    const user = document.getElementById('signup-user').value.trim();
+    const pass = document.getElementById('signup-pass').value;
+    const pass2 = document.getElementById('signup-pass2').value;
+    if (!name || !user || !pass || !pass2) return showErr('signup-err', 'Please fill in all fields.');
+    if (!/^[a-zA-Z0-9_]+$/.test(user)) return showErr('signup-err', 'Username can only contain letters, numbers, underscores.');
+    if (pass.length < 6) return showErr('signup-err', 'Password must be at least 6 characters.');
+    if (pass !== pass2) return showErr('signup-err', 'Passwords do not match.');
+    const users = getUsers();
+    if (users[user]) return showErr('signup-err', 'Username already taken.');
+    users[user] = { name, password: btoa(pass), created: new Date().toISOString() };
+    saveUsers(users);
+    localStorage.setItem('luj_session', user);
+    window.location.href = 'journal.html';
+  }
+
+  function demoLogin() {
+    const users = getUsers();
+    if (!users['demo']) {
+      users['demo'] = { name: 'Demo User', password: btoa('demo123'), created: new Date().toISOString() };
+      saveUsers(users);
+    }
+    localStorage.setItem('luj_session', 'demo');
+    window.location.href = 'journal.html';
+  }
+
+  // Init theme
+  const t = localStorage.getItem('luj_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', t);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
+    if (localStorage.getItem('luj_session')) window.location.href = 'journal.html';
+  });
+
+  // Enter key support
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (document.getElementById('panel-login').classList.contains('active')) login();
+    else signup();
+  });
+</script>
+</body>
+</html>
