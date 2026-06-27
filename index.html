@@ -2,252 +2,372 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🌸 Level Up Journal — Login</title>
-  <style>
-    :root {
-      --bg: #f8f5ff; --surface: #ffffff; --surface2: #f1eaff;
-      --border: #ddd0f5; --accent: #7c3aed; --accent2: #a855f7; --accent3: #c084fc;
-      --text: #1e1030; --sub: #6b5c8a;
-      --shadow: 0 4px 24px rgba(124,58,237,.12);
-      --radius: 14px;
-    }
-    [data-theme="dark"] {
-      --bg: #100c1e; --surface: #1a1330; --surface2: #231a3a;
-      --border: #3d2f60; --accent: #a855f7; --accent2: #c084fc; --accent3: #7c3aed;
-      --text: #f0e8ff; --sub: #9e8cc0;
-      --shadow: 0 4px 24px rgba(0,0,0,.4);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg); color: var(--text);
-      min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      transition: background .25s, color .25s;
-      padding: 20px;
-    }
-    .theme-toggle {
-      position: fixed; top: 16px; right: 16px;
-      background: var(--surface); border: 1.5px solid var(--border);
-      color: var(--text); border-radius: 8px; padding: 7px 13px;
-      cursor: pointer; font-size: .82rem; font-weight: 600;
-      box-shadow: var(--shadow);
-    }
-    .brand {
-      text-align: center; margin-bottom: 32px;
-    }
-    .brand .logo { font-size: 2.8rem; line-height: 1; }
-    .brand h1 { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-top: 8px; }
-    .brand p { font-size: .85rem; color: var(--sub); margin-top: 4px; }
-
-    .card {
-      background: var(--surface); border: 1.5px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow);
-      width: 100%; max-width: 400px; overflow: hidden;
-    }
-    .tabs {
-      display: flex; border-bottom: 1.5px solid var(--border);
-    }
-    .tab {
-      flex: 1; padding: 14px; text-align: center;
-      font-size: .88rem; font-weight: 700; cursor: pointer;
-      color: var(--sub); background: var(--surface2);
-      transition: all .2s; letter-spacing: .3px;
-      border: none; outline: none;
-    }
-    .tab.active {
-      background: var(--surface); color: var(--accent);
-      border-bottom: 2.5px solid var(--accent);
-    }
-    .tab-panel { display: none; padding: 28px 24px; }
-    .tab-panel.active { display: block; }
-
-    .field { margin-bottom: 16px; }
-    .field label {
-      display: block; font-size: .75rem; font-weight: 700;
-      color: var(--sub); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px;
-    }
-    .field input {
-      width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
-      border-radius: 9px; padding: 11px 14px; color: var(--text);
-      font-size: .92rem; outline: none; font-family: inherit;
-      transition: border .15s, box-shadow .15s;
-    }
-    .field input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(124,58,237,.13);
-    }
-    .field .hint { font-size: .72rem; color: var(--sub); margin-top: 4px; }
-    .err {
-      background: #fef2f2; border: 1px solid #fca5a5;
-      color: #dc2626; border-radius: 8px;
-      padding: 9px 12px; font-size: .82rem;
-      margin-bottom: 14px; display: none;
-    }
-    [data-theme="dark"] .err { background: #2d0a0a; border-color: #7f1d1d; color: #f87171; }
-    .btn-primary {
-      width: 100%; padding: 13px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none; border-radius: 10px;
-      font-size: .95rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 16px rgba(124,58,237,.3);
-      transition: opacity .15s, transform .1s;
-      letter-spacing: .3px;
-    }
-    .btn-primary:hover { opacity: .9; }
-    .btn-primary:active { transform: scale(.98); }
-    .divider {
-      display: flex; align-items: center; gap: 10px;
-      margin: 16px 0; color: var(--sub); font-size: .78rem;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
-    }
-    .demo-btn {
-      width: 100%; padding: 11px;
-      background: var(--surface2); color: var(--sub);
-      border: 1.5px solid var(--border); border-radius: 10px;
-      font-size: .88rem; font-weight: 600; cursor: pointer;
-      transition: background .15s;
-    }
-    .demo-btn:hover { background: var(--surface); color: var(--accent); border-color: var(--accent); }
-    .footer-note { text-align: center; font-size: .75rem; color: var(--sub); margin-top: 20px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomind 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
 
-<div class="brand">
-  <div class="logo">🌸</div>
-  <h1>Level Up Journal</h1>
-  <p>Track habits, missions & growth — every single day.</p>
-</div>
+  <!-- ========== LOGIN PAGE ========== -->
+  <div id="page-login" class="page active">
+    <div class="login-wrap">
 
-<div class="card">
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('login')">Sign In</button>
-    <button class="tab" onclick="switchTab('signup')">Create Account</button>
+      <div class="login-brand">
+        <div class="brand-icon">🌸</div>
+        <h1>Bloomind</h1>
+        <p>Your daily habit &amp; goal tracker</p>
+      </div>
+
+      <div class="login-card">
+        <div class="tabs">
+          <button class="tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+          <button class="tab" id="tab-register" onclick="switchTab('register')">Register</button>
+        </div>
+
+        <!-- Sign In -->
+        <div class="tab-body active" id="body-signin">
+          <div class="alert" id="signin-alert"></div>
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="signin-username" placeholder="Enter your username" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="signin-password" placeholder="Enter your password" />
+          </div>
+          <button class="btn-main" onclick="signIn()">Sign In</button>
+          <div class="divider">or</div>
+          <button class="btn-ghost" onclick="demoLogin()">Try Demo Account</button>
+        </div>
+
+        <!-- Register -->
+        <div class="tab-body" id="body-register">
+          <div class="alert" id="register-alert"></div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="reg-name" placeholder="Your full name" />
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="reg-username" placeholder="Choose a username" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="reg-password" placeholder="Min 6 characters" />
+          </div>
+          <button class="btn-main" onclick="register()">Create Account</button>
+        </div>
+      </div>
+
+      <button class="theme-btn" onclick="toggleTheme()" id="loginThemeBtn">🌙 Dark</button>
+    </div>
   </div>
 
-  <!-- LOGIN -->
-  <div class="tab-panel active" id="panel-login">
-    <div class="err" id="login-err"></div>
-    <div class="field">
-      <label>Username</label>
-      <input type="text" id="login-user" placeholder="your username" autocomplete="username" />
-    </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
-    </div>
-    <button class="btn-primary" onclick="login()">Sign In →</button>
-    <div class="divider">or</div>
-    <button class="demo-btn" onclick="demoLogin()">👀 Try Demo Account</button>
-  </div>
+  <!-- ========== MAIN APP ========== -->
+  <div id="page-app" class="page">
 
-  <!-- SIGNUP -->
-  <div class="tab-panel" id="panel-signup">
-    <div class="err" id="signup-err"></div>
-    <div class="field">
-      <label>Full Name</label>
-      <input type="text" id="signup-name" placeholder="Your name" />
-    </div>
-    <div class="field">
-      <label>Username</label>
-      <input type="text" id="signup-user" placeholder="choose a username" autocomplete="username" />
-      <div class="hint">Letters, numbers and underscores only.</div>
-    </div>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="signup-pass" placeholder="min 6 characters" autocomplete="new-password" />
-    </div>
-    <div class="field">
-      <label>Confirm Password</label>
-      <input type="password" id="signup-pass2" placeholder="repeat password" autocomplete="new-password" />
-    </div>
-    <button class="btn-primary" onclick="signup()">Create Account →</button>
-  </div>
-</div>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">🌸</span>
+        <span class="logo-text">Bloomind</span>
+      </div>
 
-<div class="footer-note">All data is stored locally in your browser.</div>
+      <div class="sidebar-user" id="sidebarUser">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div>
+          <div class="user-name" id="userName">—</div>
+          <div class="user-handle" id="userHandle">—</div>
+        </div>
+      </div>
 
-<script>
-  function toggleTheme() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const next = isDark ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    document.getElementById('themeBtn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
-    localStorage.setItem('luj_theme', next);
-  }
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" id="nav-journal"   onclick="showSection('journal')">   📓 Journal   </button>
+        <button class="nav-btn"        id="nav-dashboard" onclick="showSection('dashboard')"> 📊 Dashboard </button>
+        <button class="nav-btn"        id="nav-profile"   onclick="showSection('profile')">   👤 Profile   </button>
+      </nav>
 
-  function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'login')));
-    document.getElementById('panel-login').classList.toggle('active', tab === 'login');
-    document.getElementById('panel-signup').classList.toggle('active', tab === 'signup');
-  }
+      <div class="sidebar-footer">
+        <button class="nav-btn" onclick="toggleTheme()">
+          <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
+        </button>
+        <button class="nav-btn logout" onclick="logout()">↩ Logout</button>
+      </div>
+    </aside>
 
-  function showErr(id, msg) {
-    const el = document.getElementById(id);
-    el.textContent = msg; el.style.display = 'block';
-    setTimeout(() => el.style.display = 'none', 3500);
-  }
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-  function getUsers() { return JSON.parse(localStorage.getItem('luj_users') || '{}'); }
-  function saveUsers(u) { localStorage.setItem('luj_users', JSON.stringify(u)); }
+    <!-- Main content -->
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" onclick="openSidebar()">☰</button>
+        <span class="topbar-title" id="topbarTitle">Journal</span>
+        <span class="topbar-date" id="topbarDate"></span>
+      </header>
 
-  function login() {
-    const user = document.getElementById('login-user').value.trim();
-    const pass = document.getElementById('login-pass').value;
-    if (!user || !pass) return showErr('login-err', 'Please fill in all fields.');
-    const users = getUsers();
-    if (!users[user] || users[user].password !== btoa(pass))
-      return showErr('login-err', 'Invalid username or password.');
-    localStorage.setItem('luj_session', user);
-    window.location.href = 'journal.html';
-  }
+      <div class="main-body">
+      <!-- ═══ LEFT: sections ═══ -->
+      <div class="main-left">
 
-  function signup() {
-    const name = document.getElementById('signup-name').value.trim();
-    const user = document.getElementById('signup-user').value.trim();
-    const pass = document.getElementById('signup-pass').value;
-    const pass2 = document.getElementById('signup-pass2').value;
-    if (!name || !user || !pass || !pass2) return showErr('signup-err', 'Please fill in all fields.');
-    if (!/^[a-zA-Z0-9_]+$/.test(user)) return showErr('signup-err', 'Username can only contain letters, numbers, underscores.');
-    if (pass.length < 6) return showErr('signup-err', 'Password must be at least 6 characters.');
-    if (pass !== pass2) return showErr('signup-err', 'Passwords do not match.');
-    const users = getUsers();
-    if (users[user]) return showErr('signup-err', 'Username already taken.');
-    users[user] = { name, password: btoa(pass), created: new Date().toISOString() };
-    saveUsers(users);
-    localStorage.setItem('luj_session', user);
-    window.location.href = 'journal.html';
-  }
+      <!-- JOURNAL SECTION -->
+      <section class="section active" id="section-journal">
 
-  function demoLogin() {
-    const users = getUsers();
-    if (!users['demo']) {
-      users['demo'] = { name: 'Demo User', password: btoa('demo123'), created: new Date().toISOString() };
-      saveUsers(users);
-    }
-    localStorage.setItem('luj_session', 'demo');
-    window.location.href = 'journal.html';
-  }
+        <div class="streak-bar">
+          <div>
+            <span class="streak-num" id="streakNum">0</span>
+            <span class="streak-label">day streak 🔥</span>
+          </div>
+          <span class="streak-quote">Small steps every day.</span>
+        </div>
 
-  // Init theme
-  const t = localStorage.getItem('luj_theme') || 'light';
-  document.documentElement.setAttribute('data-theme', t);
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
-    if (localStorage.getItem('luj_session')) window.location.href = 'journal.html';
-  });
+        <!-- Check-in -->
+        <div class="card">
+          <div class="card-title">📅 Daily Check-In
+            <span class="sunday-tag" id="sundayTag" style="display:none">⚖️ Weigh-In Sunday!</span>
+          </div>
+          <div class="card-body grid-2">
+            <div class="form-group full">
+              <label>Date</label>
+              <input type="date" id="entryDate" onchange="onDateChange()" />
+            </div>
+            <div class="form-group full">
+              <label>Mood — <span id="moodText">7 / Feeling Good</span></label>
+              <div class="slider-row">
+                <input type="range" min="1" max="10" value="7" id="moodSlider" oninput="onMoodChange(this.value)" />
+                <span class="mood-pill" id="moodPill">7</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>😴 Sleep (hrs)</label>
+              <input type="number" id="sleepInput" placeholder="e.g. 7" min="0" max="24" step="0.5" />
+            </div>
+            <div class="form-group">
+              <label>⚖️ Weight (kg)</label>
+              <input type="number" id="weightInput" placeholder="e.g. 65" step="0.1" />
+            </div>
+          </div>
+        </div>
 
-  // Enter key support
-  document.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-    if (document.getElementById('panel-login').classList.contains('active')) login();
-    else signup();
-  });
-</script>
+        <!-- Missions -->
+        <div class="card">
+          <div class="card-title">🎯 Top 3 Missions Today</div>
+          <div class="card-body" id="missionList">
+            <div class="check-item" data-id="karate">
+              <input type="checkbox" class="check" onchange="tickMission(this)" />
+              <span class="check-label">🥋 Karate</span>
+              <input type="text" class="note-input" placeholder="notes…" />
+            </div>
+            <div class="check-item" data-id="aiml">
+              <input type="checkbox" class="check" onchange="tickMission(this)" />
+              <span class="check-label">🤖 AI / ML</span>
+              <input type="text" class="note-input" placeholder="notes…" />
+            </div>
+            <div class="check-item" data-id="health">
+              <input type="checkbox" class="check" onchange="tickMission(this)" />
+              <span class="check-label">🌿 Health / Personal</span>
+              <input type="text" class="note-input" placeholder="notes…" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Habits -->
+        <div class="card">
+          <div class="card-title">💪 Habit Tracker</div>
+          <div class="card-body">
+            <div id="habitList"></div>
+            <div class="progress-wrap">
+              <div class="progress-labels">
+                <span>Daily Progress</span>
+                <strong id="progressCount">0 / 9</strong>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+              </div>
+              <div class="progress-pct" id="progressPct">0% done</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-ghost" onclick="clearJournal()">🗑 Clear</button>
+          <button class="btn-main" onclick="saveJournal()">💾 Save Entry</button>
+        </div>
+
+      </section>
+
+      <!-- DASHBOARD SECTION -->
+      <section class="section" id="section-dashboard">
+
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-num" id="st-streak">0</div><div class="stat-lbl">🔥 Streak</div></div>
+          <div class="stat-box"><div class="stat-num" id="st-days">0</div><div class="stat-lbl">📅 Days Logged</div></div>
+          <div class="stat-box"><div class="stat-num" id="st-mood">—</div><div class="stat-lbl">🌤 Avg Mood</div></div>
+          <div class="stat-box"><div class="stat-num" id="st-sleep">—</div><div class="stat-lbl">😴 Avg Sleep</div></div>
+        </div>
+
+        <!-- Mood chart -->
+        <div class="card">
+          <div class="card-title">📈 Mood — Last 14 Days</div>
+          <div class="card-body">
+            <div class="chart-bars" id="moodChart"></div>
+            <div class="chart-labels" id="chartLabels"></div>
+          </div>
+        </div>
+
+        <!-- Habit completion -->
+        <div class="card">
+          <div class="card-title">
+            💪 Habit Completion
+            <select class="inline-select" id="habitRangeSelect" onchange="buildHabitChart()">
+              <option value="7">Last 7 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="all">All time</option>
+            </select>
+          </div>
+          <div class="card-body" id="habitChartBody"></div>
+        </div>
+
+        <!-- History -->
+        <div class="card">
+          <div class="card-title">🗂 Past Entries</div>
+          <div class="card-body">
+            <div class="filter-tabs" id="histFilters">
+              <button class="ftab active" onclick="setFilter('all', this)">All</button>
+              <button class="ftab" onclick="setFilter('7', this)">7 days</button>
+              <button class="ftab" onclick="setFilter('30', this)">30 days</button>
+              <button class="ftab" onclick="setFilter('perfect', this)">💯 Perfect</button>
+            </div>
+            <div id="historyCards"></div>
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PROFILE SECTION -->
+      <section class="section" id="section-profile">
+
+        <div class="profile-header">
+          <div class="profile-pic" id="profilePic">🌸</div>
+          <div>
+            <div class="profile-name" id="profileName">—</div>
+            <div class="profile-meta" id="profileMeta">—</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✏️ Edit Profile</div>
+          <div class="card-body">
+            <div class="alert" id="profile-alert"></div>
+            <div class="alert success" id="profile-ok"></div>
+            <div class="form-group">
+              <label>Display Name</label>
+              <input type="text" id="pf-name" />
+            </div>
+            <div class="form-group">
+              <label>Username (cannot change)</label>
+              <input type="text" id="pf-username" disabled />
+            </div>
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea id="pf-bio" placeholder="A short bio about yourself…"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Avatar URL <small>(optional)</small></label>
+              <input type="url" id="pf-avatar" placeholder="https://your-image-link.jpg" />
+            </div>
+            <button class="btn-main full" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔒 Change Password</div>
+          <div class="card-body">
+            <div class="alert" id="pw-alert"></div>
+            <div class="alert success" id="pw-ok"></div>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="pw-old" />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="pw-new" />
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" id="pw-new2" />
+            </div>
+            <button class="btn-main full" onclick="changePassword()">Update Password</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📊 My Stats</div>
+          <div class="card-body">
+            <div class="stats-grid" style="margin:0">
+              <div class="stat-box"><div class="stat-num" id="pf-streak">—</div><div class="stat-lbl">🔥 Streak</div></div>
+              <div class="stat-box"><div class="stat-num" id="pf-days">—</div><div class="stat-lbl">📅 Days</div></div>
+              <div class="stat-box"><div class="stat-num" id="pf-mood">—</div><div class="stat-lbl">🌤 Mood</div></div>
+              <div class="stat-box"><div class="stat-num" id="pf-sleep">—</div><div class="stat-lbl">😴 Sleep</div></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      </div><!-- /main-left -->
+
+      <!-- ═══ RIGHT: Today at a Glance panel ═══ -->
+      <aside class="right-panel" id="rightPanel">
+
+        <!-- Greeting -->
+        <div class="rp-greeting" id="rpGreeting">
+          <div class="rp-greeting-icon">🌸</div>
+          <div>
+            <div class="rp-greeting-name" id="rpName">Hey there!</div>
+            <div class="rp-greeting-sub" id="rpSub">Let's make today count ✨</div>
+          </div>
+        </div>
+
+        <!-- Week view -->
+        <div class="rp-card">
+          <div class="rp-card-title">📆 This Week</div>
+          <div class="week-row" id="weekRow"></div>
+        </div>
+
+        <!-- Today's snapshot -->
+        <div class="rp-card">
+          <div class="rp-card-title">⚡ Today's Snapshot</div>
+          <div class="snapshot-list" id="snapshotList">
+            <div class="snap-item"><span class="snap-icon">🌤</span><span class="snap-label">Mood</span><span class="snap-val" id="snapMood">—</span></div>
+            <div class="snap-item"><span class="snap-icon">😴</span><span class="snap-label">Sleep</span><span class="snap-val" id="snapSleep">—</span></div>
+            <div class="snap-item"><span class="snap-icon">⚖️</span><span class="snap-label">Weight</span><span class="snap-val" id="snapWeight">—</span></div>
+            <div class="snap-item"><span class="snap-icon">💪</span><span class="snap-label">Habits</span><span class="snap-val" id="snapHabits">—</span></div>
+          </div>
+        </div>
+
+        <!-- Mini habit rings -->
+        <div class="rp-card">
+          <div class="rp-card-title">🎯 Missions</div>
+          <div class="mission-snap" id="missionSnap"></div>
+        </div>
+
+        <!-- Quote -->
+        <div class="rp-quote" id="rpQuote"></div>
+
+      </aside>
+
+      </div><!-- /main-body -->
+
+    </main>
+  </div><!-- /page-app -->
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
